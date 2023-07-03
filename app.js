@@ -3,7 +3,13 @@ import asteroids from "./asteroids.js";
 import https from 'https';
 let myserver = createServer((req, res)=>{
     if(req.url == "/asteroids"){
-        asteroids.asteroidGet(req, res);
+        let fechaActual = new Date();
+        var añoActual = fechaActual.getFullYear();
+        var mesActual = (fechaActual.getMonth() + 1).toString().padStart(2, '0'); 
+        var diaActual = fechaActual.getDate().toString().padStart(2, '0');
+        let fecha1 = añoActual + "-" + mesActual + "-" + diaActual;
+        let fecha2 = fecha1;
+        asteroids.asteroidGet(req, res, fecha1, fecha2);
     }else{
         let data = "";
         https.get("https://api.nasa.gov/planetary/apod?api_key=5WjbHT1Oqu2o9vdlregm5Jw2Mrq9pUVnbTpYuDdz", (peticion)=>{
@@ -21,7 +27,8 @@ let myserver = createServer((req, res)=>{
                 position:absolute;border-radius:5px;border:1px solid rgba(255,255,255,.3);padding:20px;text-align: center;text-shadow:0 1px 1px rgba(0,0,0,.4);
                 display: flex; background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));">
                     <div class="content" style="">
-                        <h1>Sistema de seguimiento de asteroides</h1>
+                        <h1 style="font-family: 'Arial', sans-serif;font-size: 40px;color: #fff;text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);">
+                        Sistema de seguimiento de asteroides</h1>
                             <h2>Api usada: <a href="https://api.nasa.gov" rel="follow" target="_blank">Nasa Api</a></h2>
                             <p>Bienvenido al sistema de siguimeinto de asteroides. Aqui podras ver los asteroides 
                             que pasen cerca de la tierra a tiempo real</p>
